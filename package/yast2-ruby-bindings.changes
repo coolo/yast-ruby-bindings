@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Sep  4 12:25:02 UTC 2014 - mvidner@suse.com
+
+- Use a more flexible rubygem requirement syntax (bnc#895069)
+- 3.1.24
+
+-------------------------------------------------------------------
 Wed Jul 30 14:27:09 UTC 2014 - mvidner@suse.com
 
 - Fixed to report the right frame for Ops.get_foo (bnc#877758).
