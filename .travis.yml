@@ -7,12 +7,20 @@ before_install:
     - curl http://download.opensuse.org/repositories/YaST:/Head:/Travis/xUbuntu_12.04/Release.key | sudo apt-key add -
     - echo "deb http://download.opensuse.org/repositories/YaST:/Head:/Travis/xUbuntu_12.04/ ./" | sudo tee -a /etc/apt/sources.list
     - sudo apt-get update -qq
-    - sudo apt-get install --no-install-recommends -y docbook-xsl xsltproc yast2-core-dev yast2-devtools libxcrypt-dev cmake yast2-ycp-ui-bindings-dev, ruby1.9.1-dev, ruby1.9.1
+    - sudo apt-get install --no-install-recommends -y docbook-xsl xsltproc yast2-core-dev yast2-devtools libxcrypt-dev cmake yast2-ycp-ui-bindings-dev ruby1.9.1-dev ruby1.9.1 ruby-fast-gettext
+    # http://docs.travis-ci.com/user/common-build-problems/
+    - sudo apt-get --reinstall install language-pack-en language-pack-cs
+    - locale -a
+    # disable rvm, use system Ruby
+    - rvm reset
+    # use Ruby 1.9 by default (instead of Ruby 1.8)
+    - sudo update-alternatives --set ruby /usr/bin/ruby1.9.1
+    - sudo gem install rspec -v 2.14.1
 script:
     - mkdir build
     - cd build
     - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB=lib -DCMAKE_VERBOSE_MAKEFILE=ON
     - make -j 4
-    - (cd build/tests/ruby && make test ARGS=-V)
     - sudo make install
+    - (cd tests/ruby && make test ARGS=-V)
 
