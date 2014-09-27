@@ -35,6 +35,11 @@ if(NOT RUBY_EXECUTABLE)
   message(FATAL_ERROR "Ruby not found.")
 endif()
 
+# hack for Ubuntu build
+# cmake includes "/usr/include/ruby-2.1.0/x86_64-linux-gnu" instead of
+# "/usr/include/x86_64-linux-gnu/ruby-2.1.0"
+include_directories(/usr/include/x86_64-linux-gnu/ruby-2.1.0)
+
 #
 # crypt.h or xcrypt.h ?
 #
