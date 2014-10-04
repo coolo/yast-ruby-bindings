@@ -12,12 +12,12 @@ before_install:
     - sudo apt-get --reinstall install language-pack-en language-pack-cs
     # disable rvm, use system Ruby
     - rvm reset
-    - which rspec
 script:
     - mkdir build
     - cd build
     - cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DLIB=lib -DCMAKE_VERBOSE_MAKEFILE=ON
-    - make -j 4
-    - sudo make install
+    - echo "Using `nproc` jobs"
+    - make -j `nproc`
     - (cd tests/ruby && make test ARGS=-V)
+    - sudo make install
 
